@@ -1,20 +1,19 @@
 local module = {}
 
-function module.spawnPlatform(object, world)
-  for k,v in pairs(object) do
-    print(k, v)
-  end
+local Concord = require 'libraries.concord'
+local Transform = require 'components.transform'
+local Physics = require 'components.physics'
 
-  for k,v in pairs(object.quad) do
-    print(k, v)
-  end
-
-  print('Spawning platform!', object.x, object.y)
-  local platform = {}
-  platform.x = object.x
-  platform.y = object.y
-  platform.body = love.physics.newBody( world, platform.x, platform.y, 'static' )
-  return platform;
+function module.spawnPlatform(object, world, box2d_world)
+  local platform = Concord.entity(world)
+    :give(Transform, object.x, object.y)
+  
+  platform:give(Physics, platform[Transform], box2d_world, 'static')
+  local platformBody = platform[Physics].body
+  local shape = love.physics.newRectangleShape(32, 32)
+  local fixture = love.physics.newFixture(platformBody, shape)
+  
+  return platform
 end
 
 return module

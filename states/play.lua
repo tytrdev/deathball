@@ -2,124 +2,105 @@
 local playState = {};
 
 -- Dependencies - Works from project root
-local sti = require "libraries.sti.sti"
-local playerUtils = require "entities.player"
-local platformUtils = require "entities.platform"
+local sti = require 'libraries.sti'
+local Concord = require 'libraries.concord'
+
+local playerUtils = require 'entities.player'
+local platformUtils = require 'entities.platform'
+local targetUtils = require 'entities.target'
+
+local InputSystem = require 'systems.input'
+local PhysicsSystem = require 'systems.physics'
+local DrawSystem = require 'systems.draw'
+
+local Transform = require 'components.transform'
+local Physics = require 'components.physics'
+local Drawable = require 'components.drawable'
+
+local DebugPhysics = require 'libraries.box2debug'
 
 -- Local Variables
-local platforms = {}
 local player = nil
 local world = nil
+local box2d_world = nil
+local platforms = {}
+local targets = {}
 
 function playState.load()
+	-- Create the World
+	world = Concord.world()
+
+	-- Add the Systems
+	world:addSystems(InputSystem, PhysicsSystem, DrawSystem)
+
 	-- windowWidth  = love.graphics.getWidth()
 	-- windowHeight = love.graphics.getHeight()
 
 	-- Set world meter size (in pixels)
 	love.physics.setMeter(32)
 
-	-- Load a map exported to Lua from Tiled
-	map = sti("resources/maps/test.lua", { "box2d" })
-  world = love.physics.newWorld(0, 10 * love.physics.getMeter(), true)
-  -- world:setGravity(0, 10)
-	-- map:box2d_init(world)
+	-- -- Load a map exported to Lua from Tiled
+	map = sti('resources/maps/test.lua', { 'box2d' })
+  box2d_world = love.physics.newWorld(0, 10 * love.physics.getMeter(), true)
+  box2d_world:setGravity(0, 20 * love.physics.getMeter())
+	map:box2d_init(box2d_world)
 
-	local spawnLayer = map.layers["Spawns"]
+	local spawnLayer = map.layers['Spawns']
 	
 	for k, object in pairs(map.objects) do
-		if object.name == "Player" or object.type == "Player" then
+		if object.name == 'Player' or object.type == 'Player' then
       print('Got player!')
-      player = playerUtils.spawnPlayer(object, world)
-      -- world.new
-    end
-  end
-  
-  local platformLayer = map.layers["Platforms"]
+      player = playerUtils.spawnPlayer(object, world, box2d_world)
+		end
+	end
+	
+	local targetLayer = map.layers['Targets']
+	for i, object in pairs(targetLayer.objects) do
+		print(i, v)
+		targets[i] = targetUtils.spawnTarget(object, world, box2d_world)
+	end
+	
+	-- Load the platforms for this map
+	-- Should probably refactor this to be a utility that takes a callback or something
+  local platformLayer = map.layers['Platforms']
+	for i, v in ipairs(platformLayer.data) do
+		for j, v2 in pairs(v) do
+				if platforms[i] == nil then
+					platforms[i] = {}
+				end
 
-  for y=1, #platformLayer.data do
-    for x=1, #platformLayer.data[y] do
-      if platforms[x] == nil then
-        platforms[x] = {}
-      end
-
-      local tile = platformLayer.data[y][x]
-
-      if tile then
-        platforms[x][y] = platformUtils.spawnPlatform(tile, world)
-      end
-    end
-  end
-
-	-- local spriteLayer = map.layers["Platforms"]
-	-- spriteLayer.sprites = {
-	-- 	player = {
-	-- 		image = love.graphics.newImage("resources/purple.png"),
-	-- 		x = 64,
-	-- 		y = 64,
-	-- 		r = 0,
-	-- 	}
-	-- }
-
-	-- -- Update callback for Custom Layer
-	-- function spriteLayer:update(dt)
-	-- 	for _, sprite in pairs(self.sprites) do
-	-- 		sprite.r = sprite.r + math.rad(90 * dt)
-	-- 	end
-	-- end
-
-	-- -- Draw callback for Custom Layer
-	-- function spriteLayer:draw()
-	-- 	for _, sprite in pairs(self.sprites) do
-	-- 		local x = math.floor(sprite.x)
-	-- 		local y = math.floor(sprite.y)
-	-- 		local r = sprite.r
-	-- 		love.graphics.draw(sprite.image, x, y, r)
-	-- 	end
-	-- end
+				local tile = { x = j * 32, y = i * 32 }
+				platforms[i][j] = platformUtils.spawnPlatform(tile, world, box2d_world)
+		end
+	end
 end
  
 function playState.update(dt)
 	if love.keyboard.isDown('escape') then
 		love.event.quit('Thank you for playing!');
-  end
+	end
+	
+	if love.keyboard.isDown('r') then
+		playState.load()
+	end
   
   if love.keyboard.isDown('p') then
     return 'pause'
-  end
-
-  map:update(dt);
-  playerUtils.update(player, dt)
-  world:update(dt)
-  -- if love.keyboard.isDown('d') then
-	-- 	-- This makes sure that the character doesn't go pass the game window's right edge.
-	-- 	if player.x < (love.graphics.getWidth() - player.img:getWidth()) then
-	-- 		player.x = player.x + (player.speed * dt)
-	-- 	end
-	-- elseif love.keyboard.isDown('a') then
-	-- 	-- This makes sure that the character doesn't go pass the game window's left edge.
-	-- 	if player.x > 0 then 
-	-- 		player.x = player.x - (player.speed * dt)
-	-- 	end
-  -- end
-  
-  -- if love.keyboard.isDown('space') then                     -- Whenever the player presses or holds down the Spacebar:
-  --   -- The game checks if the player is on the ground. Remember that when the player is on the ground, Y-Axis Velocity = 0.
-  --   if player.y_velocity == 0 then
-  --     player.y_velocity = player.jump_height    -- The player's Y-Axis Velocity is set to it's Jump Height.
-  --   end
-  -- end
+	end
+	
+	box2d_world.update(box2d_world, dt)
+	map:update(dt);
+	world:emit("update", dt)
 end
  
 function playState.draw()
 	love.graphics.setColor(1, 1, 1)
 	map:draw()
- 
-  playerx, playery = player.body:getPosition()
-  -- print(playerx, playery)
-  love.graphics.draw(player.img, playerx, playery, 0, 1, 1, 0, 32)
-	
-	love.graphics.setColor(1, 0, 0)
-	-- map:box2d_draw(world)
+	-- map:box2d_draw(box2d_world)
+
+	world:emit("draw")
+
+	DebugPhysics(box2d_world, 0, 0, 1920, 1080)
 end
 
 return playState

@@ -1,3 +1,7 @@
+_G.GAME = require 'config.game'
+_G.DIMENSIONS = require 'config.dimensions'
+_G.DEBUG_GAME = false
+
 local menu = require 'states.menu'
 local play = require 'states.play'
 local pause = require 'states.pause'

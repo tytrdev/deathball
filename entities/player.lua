@@ -1,25 +1,34 @@
 local module = {}
 
+local Concord = require 'libraries.concord'
+
+local Transform = require 'components.transform'
+local Drawable = require 'components.drawable'
+local Physics = require 'components.physics'
+local Player = require 'components.player'
+
 local logger = require 'logger'
 
-function module.spawnPlayer(object, world) 
-  local player = {}
-  player.x = object.x
-  player.y = object.y
-  player.img = love.graphics.newImage('resources/purple.png')
-  player.speed = 200    
-  player.y_velocity = 0        
-  player.jump_height = -300
-  player.gravity = -500
-  player.body = love.physics.newBody( world, player.x, player.y, 'dynamic' )
-  return player;
-end
+function module.spawnPlayer(object, world, box2d_world) 
+  local player = Concord.entity(world)
+    :give(Transform, object.x, object.y)
+    :give(Drawable, love.graphics.newImage('resources/purple.png'))
+    :give(Player)
+  
+  player:give(Physics, player[Transform], box2d_world, 'dynamic')
 
-function module.update(player, dt)
-  -- local x, y = player.body.getPosition(player.body)
-  -- player.x = x
-  -- player.y = y
-  -- logger.debug('Debugging body', player.body)
+  local playerBody = player[Physics].body
+  playerBody:setFixedRotation(true)
+  
+  local shape = love.physics.newRectangleShape(32, 32)
+  local fixture = love.physics.newFixture(playerBody, shape) 
+  fixture:setFriction(10)
+
+  -- local footShape = love.physics.newRectangleShape(2, 32)
+  -- local footFixture = love.physics.newFixture(playerBody, footShape);
+  -- footFixture:setSensor(true)
+
+  return player;
 end
 
 return module;

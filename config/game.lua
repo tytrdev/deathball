@@ -1,0 +1,6 @@
+return {
+  SCREEN_WIDTH = 1920,
+  SCREEN_HEIGHT = 1080,
+  TILE_WIDTH = 32,
+  TILE_HEIGHT = 32,
+}

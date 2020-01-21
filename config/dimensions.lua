@@ -1,0 +1,4 @@
+return {
+  DEFAULT_WIDTH = 32,
+  DEFAULT_HEIGHT = 32,
+}
