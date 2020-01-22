@@ -12,6 +12,7 @@ function module.spawnPlatform(object, world, box2d_world)
   local platformBody = platform[Physics].body
   local shape = love.physics.newRectangleShape(32, 32)
   local fixture = love.physics.newFixture(platformBody, shape)
+  fixture:setFriction(0)
   
   return platform
 end

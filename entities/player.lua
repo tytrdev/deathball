@@ -22,7 +22,7 @@ function module.spawnPlayer(object, world, box2d_world)
   
   local shape = love.physics.newRectangleShape(32, 32)
   local fixture = love.physics.newFixture(playerBody, shape) 
-  fixture:setFriction(10)
+  -- fixture:setSensor(true)
 
   -- local footShape = love.physics.newRectangleShape(2, 32)
   -- local footFixture = love.physics.newFixture(playerBody, footShape);

@@ -8,10 +8,12 @@ local Concord = require 'libraries.concord'
 local playerUtils = require 'entities.player'
 local platformUtils = require 'entities.platform'
 local targetUtils = require 'entities.target'
+local cameraUtils =require 'entities.camera'
 
 local InputSystem = require 'systems.input'
 local PhysicsSystem = require 'systems.physics'
 local DrawSystem = require 'systems.draw'
+local CameraSystem = require 'systems.camera'
 
 local Transform = require 'components.transform'
 local Physics = require 'components.physics'
@@ -31,7 +33,7 @@ function playState.load()
 	world = Concord.world()
 
 	-- Add the Systems
-	world:addSystems(InputSystem, PhysicsSystem, DrawSystem)
+	world:addSystems(InputSystem, PhysicsSystem, CameraSystem, DrawSystem)
 
 	-- windowWidth  = love.graphics.getWidth()
 	-- windowHeight = love.graphics.getHeight()
@@ -49,14 +51,15 @@ function playState.load()
 	
 	for k, object in pairs(map.objects) do
 		if object.name == 'Player' or object.type == 'Player' then
-      print('Got player!')
       player = playerUtils.spawnPlayer(object, world, box2d_world)
 		end
 	end
+
+	-- Create camera with a target of player
+	_G.CAMERA = cameraUtils.build(world, player)
 	
 	local targetLayer = map.layers['Targets']
 	for i, object in pairs(targetLayer.objects) do
-		print(i, v)
 		targets[i] = targetUtils.spawnTarget(object, world, box2d_world)
 	end
 	
