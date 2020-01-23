@@ -4,6 +4,7 @@ local playState = {};
 -- Dependencies - Works from project root
 local sti = require 'libraries.sti'
 local Concord = require 'libraries.concord'
+local wf = require 'libraries.windfield'
 
 local playerUtils = require 'entities.player'
 local platformUtils = require 'entities.platform'
@@ -12,6 +13,7 @@ local cameraUtils =require 'entities.camera'
 
 local InputSystem = require 'systems.input'
 local PhysicsSystem = require 'systems.physics'
+local ProjectileSystem = require 'systems.projectile'
 local DrawSystem = require 'systems.draw'
 local CameraSystem = require 'systems.camera'
 
@@ -25,6 +27,7 @@ local DebugPhysics = require 'libraries.box2debug'
 local player = nil
 local world = nil
 local box2d_world = nil
+local wfworld = nil
 local platforms = {}
 local targets = {}
 
@@ -33,10 +36,13 @@ function playState.load()
 	world = Concord.world()
 
 	-- Add the Systems
-	world:addSystems(InputSystem, PhysicsSystem, CameraSystem, DrawSystem)
-
+	world:addSystems(InputSystem, PhysicsSystem, ProjectileSystem, CameraSystem, DrawSystem)
+	_G.world = world
 	-- windowWidth  = love.graphics.getWidth()
 	-- windowHeight = love.graphics.getHeight()
+
+	wfworld = wf.newWorld(0, 0, true)
+	wfworld:setGravity(0, 512)
 
 	-- Set world meter size (in pixels)
 	love.physics.setMeter(32)
@@ -48,7 +54,8 @@ function playState.load()
 	_G.MAP = map
 
   box2d_world = love.physics.newWorld(0, 10 * love.physics.getMeter(), true)
-  box2d_world:setGravity(0, 20 * love.physics.getMeter())
+	box2d_world:setGravity(0, 20 * love.physics.getMeter())
+	_G.box2d_world = box2d_world
 
 	local spawnLayer = map.layers['Spawns']
 	
@@ -101,6 +108,7 @@ end
 -- TODO: Move a lot of this to the draw system?
 -- TODO: Organize globals and depend on those in the drawsystem?
 function playState.draw()
+	-- wfworld:draw()
 	love.graphics.setColor(1, 1, 1)
 	-- map:box2d_draw(box2d_world)
 	

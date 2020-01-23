@@ -7,7 +7,7 @@ local Physics = require 'components.physics'
 
 function module.spawnTarget(object, world, box2d_world)
   local target = Concord.entity(world)
-    :give(Drawable, love.graphics.newImage('resources/target.png'))
+    :give(Drawable, love.graphics.newImage('resources/textures/target.png'))
     :give(Transform, object.x, object.y)
 
   target:give(Physics, target[Transform], box2d_world, 'static')

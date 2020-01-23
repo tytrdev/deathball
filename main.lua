@@ -19,14 +19,16 @@ function love.load()
 
 	state = play
 	state.load()
+
+	local music = love.audio.newSource('resources/music/wiiu_final.ogg', 'static')
+	music:setVolume(1.0)
+	music:play()
 end
  
 function love.update(dt)
 	local message = state.update(dt)
 
-	-- local music = love.audio.newSource('resources/music/wiiu_final.ogg', 'stream')
-	-- music:setVolume(1.0)
-	-- music:play()
+	
 
 	if message and message == 'play' then
 		state = play

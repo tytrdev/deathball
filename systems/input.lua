@@ -4,6 +4,8 @@ local Player = require 'components.player'
 local Transform = require 'components.transform'
 local Physics = require 'components.physics'
 
+local laserUtils = require 'entities.laser'
+
 local InputSystem = Concord.system({Player, Transform, Physics})
 
 function InputSystem:update(dt)
@@ -30,6 +32,10 @@ function InputSystem:update(dt)
 
         if love.keyboard.isDown('a') then
             physics.velocity.x = physics.velocity.x - player.movespeed
+        end
+
+        if love.keyboard.isDown('f') then
+            laserUtils.build(transform.position, _G.world, _G.box2d_world)    
         end
     end
 end
