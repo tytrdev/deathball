@@ -21,8 +21,13 @@ function CameraSystem:update()
         x = x - love.graphics.getWidth() / 2
         y = y - love.graphics.getHeight() / 2
 
-        -- if x < 50 then x = 50 end
-        -- if x > 1000 then x = 1000 end
+        xmax = _G.MAP.totalwidth - _G.GAME.SCREEN_WIDTH
+        if x < 0 then x = 0 end
+        if x > xmax then x = xmax end
+
+        ymax = _G.MAP.totalheight - _G.GAME.SCREEN_HEIGHT
+        if y < 0 then y = 0 end
+        if y > ymax then y = ymax end
 
         transform.position.x = -1 * x
         transform.position.y = -1 * y

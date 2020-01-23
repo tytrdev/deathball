@@ -16,9 +16,9 @@ local function drawFixture(fixture)
 		local radius = shape:getRadius()
 		love.graphics.setColor(0,255,255,255)
 		love.graphics.circle("line",x,y,radius,15)
-		local eyeRadius = radius/4
-		love.graphics.setColor(0,255,255,255)
-		love.graphics.circle("line",0,-radius+eyeRadius,eyeRadius,10)
+		-- local eyeRadius = radius/4
+		-- love.graphics.setColor(0,255,255,255)
+		-- love.graphics.circle("line",0,-radius+eyeRadius,eyeRadius,10)
 	elseif (shapeType == "polygon") then
 		local points = {shape:getPoints()}
 		love.graphics.setColor(0,255,255,255)

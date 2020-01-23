@@ -13,7 +13,7 @@ function PhysicsSystem:update(dt)
 
         physics.body:applyLinearImpulse(physics.velocity.x, 0)
         xvel, yvel = physics.body:getLinearVelocity()
-        -- print(xvel, physics.velocity.max)
+        
         if xvel > physics.velocity.max then
             physics.body:setLinearVelocity(physics.velocity.max, yvel)
         end

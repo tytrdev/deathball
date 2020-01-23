@@ -15,10 +15,10 @@ function module.spawnTarget(object, world, box2d_world)
   local targetBody = target[Physics].body
   targetBody:setFixedRotation(true)
   
-  -- local shape = love.physics.newCircleShape(20)
-  -- local fixture = love.physics.newFixture(targetBody, shape) 
-  -- fixture:setFriction(10)
-  -- fixture:setSensor(true)
+  local shape = love.physics.newCircleShape(20)
+  local fixture = love.physics.newFixture(targetBody, shape) 
+  fixture:setFriction(10)
+  fixture:setSensor(true)
   
   return target
 end

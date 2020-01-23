@@ -15,7 +15,7 @@ local pause = require 'states.pause'
 local state = nil
  
 function love.load()
-	love.window.setMode(1280, 720, { fullscreen = false })
+	love.window.setMode(_G.GAME.SCREEN_WIDTH, _G.GAME.SCREEN_HEIGHT, { fullscreen = _G.GAME.IS_FULLSCREEN or false })
 
 	state = play
 	state.load()

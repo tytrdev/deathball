@@ -17,12 +17,10 @@ function InputSystem:update(dt)
         -- physics.velocity.y = 0
         
         if love.keyboard.isDown('w') then
-            print('applying force!')
             physics.body:applyForce(0, -250 * love.physics.getMeter())
         end
 
         if love.keyboard.isDown('s') then
-            print('applying force!')
             physics.body:applyForce(0, 250 * love.physics.getMeter())
         end
 

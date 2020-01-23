@@ -8,7 +8,6 @@ local DrawSystem = Concord.system({ Transform, Drawable })
 function DrawSystem:draw()
     local camera = _G.CAMERA
     if camera then
-        print('GOt camera')
         local cameraTransform = camera[Transform]
         local graphicsTransform = love.math.newTransform(
             cameraTransform.position.x,

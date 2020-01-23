@@ -42,10 +42,13 @@ function playState.load()
 	love.physics.setMeter(32)
 
 	-- -- Load a map exported to Lua from Tiled
-	map = sti('resources/maps/test.lua', { 'box2d' })
+	map = sti('resources/maps/test.lua')
+	map.totalwidth = map.width * map.tilewidth
+	map.totalheight = map.height * map.tileheight 
+	_G.MAP = map
+
   box2d_world = love.physics.newWorld(0, 10 * love.physics.getMeter(), true)
   box2d_world:setGravity(0, 20 * love.physics.getMeter())
-	map:box2d_init(box2d_world)
 
 	local spawnLayer = map.layers['Spawns']
 	
@@ -92,18 +95,23 @@ function playState.update(dt)
 	end
 	
 	box2d_world.update(box2d_world, dt)
-	map:update(dt);
 	world:emit("update", dt)
 end
- 
+
+-- TODO: Move a lot of this to the draw system?
+-- TODO: Organize globals and depend on those in the drawsystem?
 function playState.draw()
 	love.graphics.setColor(1, 1, 1)
-	map:draw()
 	-- map:box2d_draw(box2d_world)
+	
+	local cameraTransform = _G.CAMERA[Transform]
+	local x = cameraTransform.position.x
+	local y = cameraTransform.position.y
 
+	map:draw(x, y)
 	world:emit("draw")
 
-	DebugPhysics(box2d_world, 0, 0, 1920, 1080)
+	DebugPhysics(box2d_world, -1 * x, -1 * y, _G.GAME.SCREEN_WIDTH, _G.GAME.SCREEN_HEIGHT)
 end
 
 return playState

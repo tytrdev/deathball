@@ -3,4 +3,5 @@ return {
   SCREEN_HEIGHT = 1080,
   TILE_WIDTH = 32,
   TILE_HEIGHT = 32,
+  IS_FULLSCREEN = true,
 }
