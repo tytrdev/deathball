@@ -1,6 +1,7 @@
 local menuState = {}
 
 function menuState.load()
+  love.graphics.setFont(love.graphics.newFont(50))
 end
  
 function menuState.update(dt)

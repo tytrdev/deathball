@@ -26,7 +26,6 @@ local DebugPhysics = require 'libraries.box2debug'
 -- Local Variables
 local player = nil
 local world = nil
-local box2d_world = nil
 local wfworld = nil
 local platforms = {}
 local targets = {}
@@ -38,14 +37,19 @@ function playState.load()
 	-- Add the Systems
 	world:addSystems(InputSystem, PhysicsSystem, ProjectileSystem, CameraSystem, DrawSystem)
 	_G.world = world
-	-- windowWidth  = love.graphics.getWidth()
-	-- windowHeight = love.graphics.getHeight()
 
 	wfworld = wf.newWorld(0, 0, true)
 	wfworld:setGravity(0, 512)
 
+	wfworld:addCollisionClass('Player')
+	wfworld:addCollisionClass('Platform')
+	wfworld:addCollisionClass('Target')
+	wfworld:addCollisionClass('Projectile', {ignores = {'Player'}})
+
+	_G.wfworld = wfworld
+
 	-- Set world meter size (in pixels)
-	love.physics.setMeter(32)
+	-- love.physics.setMeter(32)
 
 	-- -- Load a map exported to Lua from Tiled
 	map = sti('resources/maps/test.lua')
@@ -53,24 +57,11 @@ function playState.load()
 	map.totalheight = map.height * map.tileheight 
 	_G.MAP = map
 
-  box2d_world = love.physics.newWorld(0, 10 * love.physics.getMeter(), true)
-	box2d_world:setGravity(0, 20 * love.physics.getMeter())
-	_G.box2d_world = box2d_world
-
 	local spawnLayer = map.layers['Spawns']
-	
-	for k, object in pairs(map.objects) do
-		if object.name == 'Player' or object.type == 'Player' then
-      player = playerUtils.spawnPlayer(object, world, box2d_world)
-		end
-	end
-
-	-- Create camera with a target of player
-	_G.CAMERA = cameraUtils.build(world, player)
 	
 	local targetLayer = map.layers['Targets']
 	for i, object in pairs(targetLayer.objects) do
-		targets[i] = targetUtils.spawnTarget(object, world, box2d_world)
+		targets[i] = targetUtils.spawnTarget(object, world, wfworld)
 	end
 	
 	-- Load the platforms for this map
@@ -83,9 +74,18 @@ function playState.load()
 				end
 
 				local tile = { x = j * 32, y = i * 32 }
-				platforms[i][j] = platformUtils.spawnPlatform(tile, world, box2d_world)
+				platforms[i][j] = platformUtils.spawnPlatform(tile, world, wfworld)
 		end
 	end
+
+	for k, object in pairs(map.objects) do
+		if object.name == 'Player' or object.type == 'Player' then
+      player = playerUtils.spawnPlayer(object, world, wfworld)
+		end
+	end
+
+	-- Create camera with a target of player
+	_G.CAMERA = cameraUtils.build(world, player)
 end
  
 function playState.update(dt)
@@ -101,16 +101,12 @@ function playState.update(dt)
     return 'pause'
 	end
 	
-	box2d_world.update(box2d_world, dt)
-	world:emit("update", dt)
+	wfworld:update(dt)
+	world:emit('update', dt)
 end
 
--- TODO: Move a lot of this to the draw system?
--- TODO: Organize globals and depend on those in the drawsystem?
 function playState.draw()
-	-- wfworld:draw()
 	love.graphics.setColor(1, 1, 1)
-	-- map:box2d_draw(box2d_world)
 	
 	local cameraTransform = _G.CAMERA[Transform]
 	local x = cameraTransform.position.x
@@ -119,7 +115,7 @@ function playState.draw()
 	map:draw(x, y)
 	world:emit("draw")
 
-	DebugPhysics(box2d_world, -1 * x, -1 * y, _G.GAME.SCREEN_WIDTH, _G.GAME.SCREEN_HEIGHT)
+	wfworld:draw()
 end
 
 return playState

@@ -2,14 +2,15 @@ local Concord = require('libraries.concord')
 
 local Physics = Concord.component(function(physics, transform, world, type)
   physics.velocity = {
-    x = 0,
-    y = 0,
+    x = 10,
+    y = 10,
     max = 100 * love.physics.getMeter(),
   }
 
-  local x = transform.position.x - transform.dimensions.width / 2
-  local y = transform.position.y - transform.dimensions.height / 2
-  physics.body = love.physics.newBody( world, x, y, type or 'dynamic' )
+  local x = transform.position.x - transform.dimensions.width
+  local y = transform.position.y - transform.dimensions.height
+  physics.body = world:newRectangleCollider(x, y, 32, 32)
+  physics.body:setType('static')
 end)
 
 return Physics

@@ -5,20 +5,16 @@ local Drawable = require 'components.drawable'
 local Transform = require 'components.transform'
 local Physics = require 'components.physics'
 
-function module.spawnTarget(object, world, box2d_world)
+function module.spawnTarget(object, world, wfworld)
   local target = Concord.entity(world)
     :give(Drawable, love.graphics.newImage('resources/textures/target.png'))
     :give(Transform, object.x, object.y)
 
-  target:give(Physics, target[Transform], box2d_world, 'static')
+  target:give(Physics, target[Transform], wfworld, 'static')
 
   local targetBody = target[Physics].body
   targetBody:setFixedRotation(true)
-  
-  local shape = love.physics.newCircleShape(20)
-  local fixture = love.physics.newFixture(targetBody, shape) 
-  fixture:setFriction(10)
-  fixture:setSensor(true)
+  targetBody:setCollisionClass('Target')
   
   return target
 end

@@ -1,4 +1,5 @@
 local Concord = require 'libraries.concord'
+local DebugPhysics = require 'libraries.box2debug'
 
 local Transform = require 'components.transform'
 local Physics = require 'components.physics'
@@ -7,7 +8,6 @@ local PhysicsSystem = Concord.system({Transform, Physics})
 
 function PhysicsSystem:update(dt)
     for _, e in ipairs(self.pool) do
-        -- I use lowerCamelCase to indicate its an instance
         local transform = e[Transform]
         local physics = e[Physics]
 

@@ -10,9 +10,7 @@ function module.spawnPlatform(object, world, box2d_world)
   
   platform:give(Physics, platform[Transform], box2d_world, 'static')
   local platformBody = platform[Physics].body
-  local shape = love.physics.newRectangleShape(32, 32)
-  local fixture = love.physics.newFixture(platformBody, shape)
-  fixture:setFriction(0)
+  platformBody:setCollisionClass('Platform')
   
   return platform
 end

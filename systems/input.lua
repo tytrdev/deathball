@@ -8,6 +8,8 @@ local laserUtils = require 'entities.laser'
 
 local InputSystem = Concord.system({Player, Transform, Physics})
 
+local laser_sound_effect = love.audio.newSource('resources/sounds/laser.wav', 'static')
+
 function InputSystem:update(dt)
     for _, e in ipairs(self.pool) do
         -- I use lowerCamelCase to indicate its an instance
@@ -35,7 +37,8 @@ function InputSystem:update(dt)
         end
 
         if love.keyboard.isDown('f') then
-            laserUtils.build(transform.position, _G.world, _G.box2d_world)    
+            laserUtils.build(transform.position, _G.world, _G.wfworld)
+            laser_sound_effect:play()
         end
     end
 end

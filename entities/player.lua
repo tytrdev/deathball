@@ -19,9 +19,9 @@ function module.spawnPlayer(object, world, box2d_world)
 
   local playerBody = player[Physics].body
   playerBody:setFixedRotation(true)
+  playerBody:setType('dynamic')
+  playerBody:setCollisionClass('Player')
   
-  local shape = love.physics.newRectangleShape(32, 32)
-  local fixture = love.physics.newFixture(playerBody, shape) 
   -- fixture:setSensor(true)
 
   -- local footShape = love.physics.newRectangleShape(2, 32)
