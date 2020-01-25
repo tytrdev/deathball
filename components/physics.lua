@@ -9,8 +9,10 @@ local Physics = Concord.component(function(physics, transform, world, type)
 
   local x = transform.position.x - transform.dimensions.width
   local y = transform.position.y - transform.dimensions.height
-  physics.body = world:newRectangleCollider(x, y, 32, 32)
-  physics.body:setType('static')
+  local w = transform.dimensions.width or 32
+  local h = transform.dimensions.height or 32
+  physics.body = world:newRectangleCollider(x, y, w, h)
+  physics.body:setType(type or 'static')
 end)
 
 return Physics

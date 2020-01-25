@@ -12,6 +12,8 @@ local stageselect = require 'states.stage_select'
 local play = require 'states.play'
 local pause = require 'states.pause'
 
+local Input = require 'config.input'
+
 local gamestate = nil
  
 function love.load()
@@ -36,6 +38,8 @@ function love.update(dt)
 		gamestate = pause
 		gamestate.load()
 	end
+
+	Input.update()
 end
  
 function love.draw()

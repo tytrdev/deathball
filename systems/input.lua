@@ -1,5 +1,7 @@
 local Concord = require 'libraries.concord'
 
+local Input = require 'config.input'
+
 local Player = require 'components.player'
 local Transform = require 'components.transform'
 local Physics = require 'components.physics'
@@ -20,23 +22,23 @@ function InputSystem:update(dt)
         physics.velocity.x = 0
         -- physics.velocity.y = 0
         
-        if love.keyboard.isDown('w') then
-            physics.body:applyForce(0, -250 * love.physics.getMeter())
+        if Input.wasPressed('jump') then
+            physics.body:applyForce(0, -1000 * love.physics.getMeter())
         end
 
-        if love.keyboard.isDown('s') then
+        if Input.wasPressed('down') then
             physics.body:applyForce(0, 250 * love.physics.getMeter())
         end
 
-        if love.keyboard.isDown('d') then
+        if Input.isActive('move_right') then
             physics.velocity.x = physics.velocity.x + player.movespeed
         end
 
-        if love.keyboard.isDown('a') then
+        if Input.isActive('move_left') then
             physics.velocity.x = physics.velocity.x - player.movespeed
         end
 
-        if love.keyboard.isDown('f') then
+        if Input.wasPressed('shoot') then
             laserUtils.build(transform.position, _G.world, _G.wfworld)
             laser_sound_effect:play()
         end
