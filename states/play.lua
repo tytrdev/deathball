@@ -14,6 +14,7 @@ local cameraUtils =require 'entities.camera'
 local InputSystem = require 'systems.input'
 local PhysicsSystem = require 'systems.physics'
 local ProjectileSystem = require 'systems.projectile'
+local AnimationSystem = require 'systems.animation'
 local DrawSystem = require 'systems.draw'
 local CameraSystem = require 'systems.camera'
 
@@ -35,11 +36,18 @@ function playState.load()
 	world = Concord.world()
 
 	-- Add the Systems
-	world:addSystems(InputSystem, PhysicsSystem, ProjectileSystem, CameraSystem, DrawSystem)
+	world:addSystems(
+		InputSystem,
+		PhysicsSystem,
+		ProjectileSystem,
+		CameraSystem,
+		AnimationSystem,
+		DrawSystem
+	)
 	_G.world = world
 
 	wfworld = wf.newWorld(0, 0, true)
-	wfworld:setGravity(0, 512)
+	wfworld:setGravity(0, 10 * love.physics.getMeter())
 
 	wfworld:addCollisionClass('Player')
 	wfworld:addCollisionClass('Platform')

@@ -11,8 +11,8 @@ function PhysicsSystem:update(dt)
         local transform = e[Transform]
         local physics = e[Physics]
 
-        physics.body:applyLinearImpulse(physics.velocity.x, 0)
         xvel, yvel = physics.body:getLinearVelocity()
+        physics.body:setLinearVelocity(physics.velocity.x, yvel)
         
         if xvel > physics.velocity.max then
             physics.body:setLinearVelocity(physics.velocity.max, yvel)

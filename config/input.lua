@@ -23,9 +23,12 @@ local inputMap = {
 }
 
 function love.keypressed(key, scancode, isrepeat)
-  if inputState == nil or inputState == nil or key == nil then return false end
+  local input = inputMap[key]
+  if not input or input == nil then return false end
 
-  local currentstate = inputState[inputMap[key]]
+  local currentstate = inputState[input]
+  if not currentstate or currentstate == nil then return false end
+
   if currentstate == pressed then
     inputState[inputMap[key]] = held
   else
@@ -34,7 +37,12 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.keyreleased(key, scancode)
-  inputState[inputMap[key]] = neutral
+  local input = inputMap[key]
+  if not input or input == nil then return false end
+
+  if not inputState or inputState == nil then return false end
+  
+  inputState[input] = neutral
 end
 
 -- Module API Declarations

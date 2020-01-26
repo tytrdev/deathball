@@ -17,7 +17,7 @@ function ProjectileSystem:update(dt)
 
         -- local x, y = physics.body:getPosition()
         -- physics.body:setPosition(x + projectile.speed, y)
-        physics.body:setLinearVelocity(25 * love.physics.getMeter(), 0)
+        physics.body:setLinearVelocity(projectile.speed, 0)
         
         if physics.body:enter('Target') then
             physics.body:destroy()

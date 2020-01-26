@@ -6,14 +6,18 @@ local Transform = require 'components.transform'
 local Drawable = require 'components.drawable'
 local Physics = require 'components.physics'
 local Player = require 'components.player'
+local Animation = require 'components.animation'
 
-local logger = require 'logger'
+local playerAnimations = require 'animations.player'
+
+-- local logger = require 'logger'
 
 function module.spawnPlayer(object, world, box2d_world) 
   local player = Concord.entity(world)
     :give(Transform, object.x, object.y)
     :give(Drawable, love.graphics.newImage('resources/textures/purple.png'))
     :give(Player)
+    :give(Animation, playerAnimations)
   
   player:give(Physics, player[Transform], box2d_world, 'dynamic')
 
