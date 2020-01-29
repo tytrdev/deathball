@@ -25,6 +25,7 @@ function ProjectileSystem:update(dt)
             -- local collision_data = self.collider:getEnterCollisionData('Target')
             -- local target = collision_data.collider:getObject()
             explosionsound:play()
+            SCORE = SCORE + 1
         end
 
         if physics.body:enter('Platform') then

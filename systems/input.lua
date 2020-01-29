@@ -42,11 +42,6 @@ function InputSystem:update(dt)
             physics.body:applyForce(0, 250 * love.physics.getMeter())
         end
 
-        if Input.wasPressed('dash') then
-            print('dash was preseeedfs')
-            physics.body:applyForce(250000 * love.physics.getMeter() * physics.body:getMass(), 0)
-        end
-
         if Input.isActive('move_right') then
             direction = direction + 1
             physics.velocity.x = player.movespeed * love.physics.getMeter()
@@ -61,6 +56,13 @@ function InputSystem:update(dt)
             laserUtils.build(transform.position, direction, _G.world, _G.wfworld)
             laser_sound_effect:play()
         end
+
+        if Input.wasPressed('dash') then
+            print('dash was preseeedfs')
+            physics.body:applyLinearImpulse(direction * 200 * love.physics.getMeter(), 0)
+        end
+
+        transform.direction = direction
     end
 end
 

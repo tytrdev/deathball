@@ -25,7 +25,11 @@ function DrawSystem:draw()
             y = transform.position.y - transform.dimensions.height / 2
 
             if drawable.quad then
-                love.graphics.draw(drawable.img, drawable.quad, x, y)
+                if transform.direction then
+                    love.graphics.draw(drawable.img, drawable.quad, x, y, 0, transform.direction or 1, 1)
+                else
+                    love.graphics.draw(drawable.img, drawable.quad, x, y)
+                end
             else
                 love.graphics.draw(drawable.img, x, y)
             end

@@ -31,6 +31,8 @@ local wfworld = nil
 local platforms = {}
 local targets = {}
 
+SCORE = 0
+
 function playState.load()
 	-- Create the World
 	world = Concord.world()
@@ -123,7 +125,9 @@ function playState.draw()
 	map:draw(x, y)
 	world:emit("draw")
 
-	wfworld:draw()
+	-- print(SCORE)
+	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+	-- wfworld:draw()
 end
 
 return playState

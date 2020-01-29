@@ -10,16 +10,18 @@ function PhysicsSystem:update(dt)
     for _, e in ipairs(self.pool) do
         local transform = e[Transform]
         local physics = e[Physics]
-
-        xvel, yvel = physics.body:getLinearVelocity()
-        physics.body:setLinearVelocity(physics.velocity.x, yvel)
         
-        if xvel > physics.velocity.max then
-            physics.body:setLinearVelocity(physics.velocity.max, yvel)
+        if physics.velocity.x then
+            physics.body:applyForce(physics.velocity.x, 0)
         end
 
-        if xvel < -1 * physics.velocity.max then
-            physics.body:setLinearVelocity(-1 * physics.velocity.max, yvel)
+        if physics.velocity.max then
+            local xvel, yvel = physics.body:getLinearVelocity();
+            if xvel > physics.velocity.max then
+                physics.body:setLinearVelocity(physics.velocity.max, yvel)
+            elseif xvel < -1 * physics.velocity.max then
+                physics.body:setLinearVelocity(-1 * physics.velocity.max, yvel)
+            end
         end
 
         local x, y = physics.body:getPosition()

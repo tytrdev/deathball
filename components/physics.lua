@@ -4,7 +4,7 @@ local Physics = Concord.component(function(physics, transform, world, type)
   physics.velocity = {
     x = 10,
     y = 10,
-    max = 100 * love.physics.getMeter(),
+    max = 10 * love.physics.getMeter(),
   }
 
   local x = transform.position.x - transform.dimensions.width
