@@ -35,11 +35,16 @@ function InputSystem:update(dt)
         local direction = 0
         
         if player.grounded and Input.wasPressed('jump') then
-            physics.body:applyForce(0, -1000 * love.physics.getMeter())
+            physics.body:applyForce(0, -10000 * love.physics.getMeter())
         end
 
         if Input.wasPressed('down') then
             physics.body:applyForce(0, 250 * love.physics.getMeter())
+        end
+
+        if Input.wasPressed('dash') then
+            print('dash was preseeedfs')
+            physics.body:applyForce(250000 * love.physics.getMeter() * physics.body:getMass(), 0)
         end
 
         if Input.isActive('move_right') then
