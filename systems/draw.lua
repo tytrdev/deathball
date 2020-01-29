@@ -23,7 +23,12 @@ function DrawSystem:draw()
         if drawable.img then
             x = transform.position.x - transform.dimensions.width / 2
             y = transform.position.y - transform.dimensions.height / 2
-            love.graphics.draw(drawable.img, x, y)
+
+            if drawable.quad then
+                love.graphics.draw(drawable.img, drawable.quad, x, y)
+            else
+                love.graphics.draw(drawable.img, x, y)
+            end
         else
             love.graphics.circle('fill', transform.position.x, transform.position.y, 25)
         end

@@ -14,10 +14,10 @@ local playerAnimations = require 'animations.player'
 
 function module.spawnPlayer(object, world, box2d_world) 
   local player = Concord.entity(world)
-    :give(Transform, object.x, object.y)
+    :give(Animation, playerAnimations)
+    :give(Transform, object.x, object.y, playerAnimations.width, playerAnimations.height)
     :give(Drawable, love.graphics.newImage('resources/textures/purple.png'))
     :give(Player)
-    :give(Animation, playerAnimations)
   
   player:give(Physics, player[Transform], box2d_world, 'dynamic')
 

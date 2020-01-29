@@ -24,6 +24,14 @@ function InputSystem:update(dt)
         physics.velocity.x = 0
         -- physics.velocity.y = 0
 
+        if physics.body:enter('Platform') or physics.body:stay('Platform') then
+            player.grounded = true
+            animation.targetAnimation = 'grounded'
+        else
+            player.grounded = false
+            animation.targetAnimation = 'jumping'
+        end
+
         local direction = 0
         
         if player.grounded and Input.wasPressed('jump') then
@@ -47,16 +55,6 @@ function InputSystem:update(dt)
         if Input.wasPressed('shoot') then
             laserUtils.build(transform.position, direction, _G.world, _G.wfworld)
             laser_sound_effect:play()
-        end
-
-        if physics.body:enter('Platform') or physics.body:stay('Platform') then
-            player.grounded = true
-            animation.targetAnimation = 'grounded'
-        end
-
-        if not physics.body:stay('Platform') or physics.body:exit('Platform') then
-            player.grounded = false
-            animation.targetAnimation = 'grounded'
         end
     end
 end

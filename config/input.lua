@@ -51,7 +51,6 @@ local module = {}
 function module.update()
   for key, state in pairs(inputState) do
     if state == pressed then
-      print('held now', key)
       inputState[key] = held
     end
   end
