@@ -58,7 +58,6 @@ function InputSystem:update(dt)
         end
 
         if Input.wasPressed('dash') then
-            print('dash was preseeedfs')
             physics.body:applyLinearImpulse(direction * 1200 * love.physics.getMeter(), 0)
         end
 

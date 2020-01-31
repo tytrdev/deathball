@@ -23,9 +23,9 @@ function love.load()
 	gamestate = play
 	gamestate.load()
 
-	local music = love.audio.newSource('resources/music/wiiu_final.ogg', 'stream')
-	music:setVolume(1.0)
-	music:play()
+	-- local music = love.audio.newSource('resources/music/wiiu_final.ogg', 'stream')
+	-- music:setVolume(1.0)
+	-- music:play()
 end
  
 function love.update(dt)

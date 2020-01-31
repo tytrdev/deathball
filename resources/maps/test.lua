@@ -8,8 +8,8 @@ return {
   height = 100,
   tilewidth = 32,
   tileheight = 32,
-  nextlayerid = 11,
-  nextobjectid = 32,
+  nextlayerid = 12,
+  nextobjectid = 36,
   properties = {},
   tilesets = {
     {
@@ -247,19 +247,6 @@ return {
           properties = {}
         },
         {
-          id = 30,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 1888,
-          y = 32.6667,
-          width = 30.6667,
-          height = 734,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
           id = 31,
           name = "",
           type = "",
@@ -268,6 +255,32 @@ return {
           y = 960.667,
           width = 30.6667,
           height = 127.333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 33,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 32.0606,
+          y = 672.029,
+          width = 733.939,
+          height = 31.8986,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 34,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 31,
+          y = 3168.5,
+          width = 5696.73,
+          height = 31,
           rotation = 0,
           visible = true,
           properties = {}
@@ -310,6 +323,45 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 32,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 1888.67,
+          y = 960.667,
+          width = 30.6667,
+          height = 127.333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 30,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 1888,
+          y = 32.6667,
+          width = 30.6667,
+          height = 734,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 35,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 1888.67,
+          y = 960.667,
+          width = 30.6667,
+          height = 127.333,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -317,7 +369,7 @@ return {
       type = "objectgroup",
       id = 5,
       name = "Spawns",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = 0,
       offsety = 0,
@@ -343,7 +395,7 @@ return {
       type = "objectgroup",
       id = 8,
       name = "Targets",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = 0,
       offsety = 0,
@@ -433,8 +485,8 @@ return {
           name = "",
           type = "",
           shape = "rectangle",
-          x = 807.854,
-          y = 578.253,
+          x = 801.854,
+          y = 430.253,
           width = 96.3756,
           height = 51.0224,
           rotation = 0,
@@ -520,6 +572,18 @@ return {
           properties = {}
         }
       }
+    },
+    {
+      type = "objectgroup",
+      id = 11,
+      name = "Ramps",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      draworder = "topdown",
+      properties = {},
+      objects = {}
     }
   }
 }

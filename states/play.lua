@@ -2,14 +2,8 @@
 local playState = {};
 
 -- Dependencies - Works from project root
-local sti = require 'libraries.sti'
 local Concord = require 'libraries.concord'
 local wf = require 'libraries.windfield'
-
-local playerUtils = require 'entities.player'
-local platformUtils = require 'entities.platform'
-local targetUtils = require 'entities.target'
-local cameraUtils =require 'entities.camera'
 
 local InputSystem = require 'systems.input'
 local PhysicsSystem = require 'systems.physics'
@@ -21,6 +15,9 @@ local CameraSystem = require 'systems.camera'
 local Transform = require 'components.transform'
 local Physics = require 'components.physics'
 local Drawable = require 'components.drawable'
+
+local MapUtils = require 'utils.map'
+local CameraUtils = require 'entities.camera'
 
 local DebugPhysics = require 'libraries.box2debug'
 
@@ -62,50 +59,11 @@ function playState.load()
 	-- love.physics.setMeter(32)
 
 	-- -- Load a map exported to Lua from Tiled
-	map = sti('resources/maps/test.lua')
-	map.totalwidth = map.width * map.tilewidth
-	map.totalheight = map.height * map.tileheight 
+	map, entities = MapUtils.loadMap('resources/maps/test.lua', world, wfworld)
 	_G.MAP = map
 
-	local spawnLayer = map.layers['Spawns']
-	
-	local targetLayer = map.layers['Targets']
-	for i, object in pairs(targetLayer.objects) do
-		targets[i] = targetUtils.spawnTarget(object, world, wfworld)
-	end
-
-	local groundLayer = map.layers['Ground']
-	for i, object in pairs(groundLayer.objects) do
-		platformUtils.spawnPlatform(object, world, wfworld)
-	end
-
-	local wallLayer = map.layers['Walls']
-	for i, object in pairs(wallLayer.objects) do
-		platformUtils.spawnPlatform(object, world, wfworld)
-	end
-	
-	-- Load the platforms for this map
-	-- Should probably refactor this to be a utility that takes a callback or something
-  -- local platformLayer = map.layers['Platforms']
-	-- for i, v in ipairs(platformLayer.data) do
-	-- 	for j, v2 in pairs(v) do
-	-- 			if platforms[i] == nil then
-	-- 				platforms[i] = {}
-	-- 			end
-
-	-- 			local tile = { x = j * 32, y = i * 32 }
-	-- 			platforms[i][j] = platformUtils.spawnPlatform(tile, world, wfworld)
-	-- 	end
-	-- end
-
-	for k, object in pairs(map.objects) do
-		if object.name == 'Player' or object.type == 'Player' then
-      player = playerUtils.spawnPlayer(object, world, wfworld)
-		end
-	end
-
 	-- Create camera with a target of player
-	_G.CAMERA = cameraUtils.build(world, player)
+	_G.CAMERA = CameraUtils.build(world, entities['Player'])
 end
  
 function playState.update(dt)
@@ -136,6 +94,8 @@ function playState.draw()
 	world:emit("draw")
 
 	-- print(SCORE)
+	love.graphics.setColor(0, 0, 0)
+
 	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
 	wfworld:draw()
 end

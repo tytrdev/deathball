@@ -12,7 +12,7 @@ local playerAnimations = require 'animations.player'
 
 -- local logger = require 'logger'
 
-function module.spawnPlayer(object, world, box2d_world) 
+function module.build(object, world, box2d_world) 
   local player = Concord.entity(world)
     :give(Animation, playerAnimations)
     :give(Transform, object.x, object.y, playerAnimations.width, playerAnimations.height)
@@ -26,6 +26,7 @@ function module.spawnPlayer(object, world, box2d_world)
   playerBody:setFixedRotation(true)
   playerBody:setType('dynamic')
   playerBody:setCollisionClass('Player')
+  playerBody:setDensity(0)
   
   -- fixture:setSensor(true)
 

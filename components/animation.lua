@@ -16,7 +16,6 @@ local Animation = Concord.component(function(animation, data)
   
   for i=1, data.frames, 1 do
     local spacing = ((i - 1) * (data.spacing + data.width)) + data.offset
-    print(spacing)
     animation.quads[i] = love.graphics.newQuad(spacing, data.verticaloffset, data.width, data.height, animation.spritesheet:getDimensions())
   end
 
