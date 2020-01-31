@@ -12,8 +12,16 @@ return {
     generator = platform.build,
     visible = false,
   },
+  Ramps = {
+    generator = platform.buildRamp,
+    visible = true,
+  },
+  Platforms = {
+    generator = platform.buildOneWayPlatform,
+    visible = false,
+  },
   Walls = {
-    generator = platform.build,
+    generator = platform.buildWall,
     visible = false,
   },
   Targets = {

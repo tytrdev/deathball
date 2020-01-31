@@ -50,7 +50,10 @@ function playState.load()
 
 	wfworld:addCollisionClass('Player')
 	wfworld:addCollisionClass('Platform')
-	wfworld:addCollisionClass('Target')
+	wfworld:addCollisionClass('OneWayPlatform')
+	wfworld:addCollisionClass('Wall')
+	wfworld:addCollisionClass('Ramp')
+	wfworld:addCollisionClass('Target', {ignores = {'Player'}})
 	wfworld:addCollisionClass('Projectile', {ignores = {'Player'}})
 
 	_G.wfworld = wfworld

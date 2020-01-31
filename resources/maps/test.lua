@@ -8,8 +8,8 @@ return {
   height = 100,
   tilewidth = 32,
   tileheight = 32,
-  nextlayerid = 12,
-  nextobjectid = 36,
+  nextlayerid = 13,
+  nextobjectid = 40,
   properties = {},
   tilesets = {
     {
@@ -281,6 +281,19 @@ return {
           y = 3168.5,
           width = 5696.73,
           height = 31,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 38,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 33.3333,
+          y = 1.33333,
+          width = 5690,
+          height = 30,
           rotation = 0,
           visible = true,
           properties = {}
@@ -583,7 +596,52 @@ return {
       offsety = 0,
       draworder = "topdown",
       properties = {},
-      objects = {}
+      objects = {
+        {
+          id = 39,
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 1632.04,
+          y = 1056.03,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = 255.583, y = 2.09375 },
+            { x = 256.25, y = -95.6146 }
+          },
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      id = 12,
+      name = "Platforms",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      draworder = "topdown",
+      properties = {},
+      objects = {
+        {
+          id = 36,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 768,
+          y = 800,
+          width = 319.5,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
     }
   }
 }

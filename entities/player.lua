@@ -27,12 +27,17 @@ function module.build(object, world, box2d_world)
   playerBody:setType('dynamic')
   playerBody:setCollisionClass('Player')
   playerBody:setDensity(0)
-  
-  -- fixture:setSensor(true)
+  playerBody:setObject(player)
 
-  -- local footShape = love.physics.newRectangleShape(2, 32)
-  -- local footFixture = love.physics.newFixture(playerBody, footShape);
-  -- footFixture:setSensor(true)
+  playerBody:setPreSolve(function(collider_1, collider_2, contact)        
+    if collider_1.collision_class == 'Player' and collider_2.collision_class == 'OneWayPlatform' then
+      local px, py = collider_1:getPosition()            
+      local pw, ph = 20, 40            
+      local tx, ty = collider_2:getPosition() 
+      local tw, th = 100, 20
+      if py + ph/2 > ty - th/2 then contact:setEnabled(false) end
+    end   
+  end)
 
   return player;
 end

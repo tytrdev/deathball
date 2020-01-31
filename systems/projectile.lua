@@ -28,7 +28,7 @@ function ProjectileSystem:update(dt)
             SCORE = SCORE + 1
         end
 
-        if physics.body:enter('Platform') then
+        if physics.body:enter('Platform') or physics.body:enter('Wall') then
             physics.body:destroy()
             e:destroy()
         end

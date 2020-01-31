@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="180" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="36">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="180" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="40">
  <editorsettings>
   <export target="test.lua" format="lua"/>
  </editorsettings>
@@ -117,6 +117,7 @@
   <object id="31" x="1888.67" y="960.667" width="30.6667" height="127.333"/>
   <object id="33" x="32.0606" y="672.029" width="733.939" height="31.8986"/>
   <object id="34" x="31" y="3168.5" width="5696.73" height="31"/>
+  <object id="38" x="33.3333" y="1.33333" width="5690" height="30"/>
  </objectgroup>
  <objectgroup id="10" name="Walls">
   <object id="28" x="5728" y="0.666667" width="31.9167" height="3198.67"/>
@@ -143,5 +144,12 @@
   <object id="21" x="1703.58" y="765.335" width="19.842" height="2.83458"/>
   <object id="22" x="1352.09" y="742.659" width="31.1803" height="5.66915"/>
  </objectgroup>
- <objectgroup id="11" name="Ramps"/>
+ <objectgroup id="11" name="Ramps">
+  <object id="39" x="1632.04" y="1056.03">
+   <polygon points="0,0 255.583,2.09375 256.25,-95.6146"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="12" name="Platforms">
+  <object id="36" x="768" y="800" width="319.5" height="32"/>
+ </objectgroup>
 </map>
