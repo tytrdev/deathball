@@ -35,7 +35,7 @@ function InputSystem:update(dt)
         local direction = 0
         
         if player.grounded and Input.wasPressed('jump') then
-            physics.body:applyForce(0, -10000 * love.physics.getMeter())
+            physics.body:applyForce(0, -1000 * love.physics.getMeter())
         end
 
         if Input.wasPressed('down') then
@@ -59,7 +59,7 @@ function InputSystem:update(dt)
 
         if Input.wasPressed('dash') then
             print('dash was preseeedfs')
-            physics.body:applyLinearImpulse(direction * 200 * love.physics.getMeter(), 0)
+            physics.body:applyLinearImpulse(direction * 1200 * love.physics.getMeter(), 0)
         end
 
         transform.direction = direction

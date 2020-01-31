@@ -21,6 +21,7 @@ function module.spawnPlayer(object, world, box2d_world)
   
   player:give(Physics, player[Transform], box2d_world, 'dynamic')
 
+  player[Physics].velocity.max = 1000
   local playerBody = player[Physics].body
   playerBody:setFixedRotation(true)
   playerBody:setType('dynamic')

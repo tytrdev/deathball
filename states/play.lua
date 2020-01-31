@@ -73,20 +73,30 @@ function playState.load()
 	for i, object in pairs(targetLayer.objects) do
 		targets[i] = targetUtils.spawnTarget(object, world, wfworld)
 	end
+
+	local groundLayer = map.layers['Ground']
+	for i, object in pairs(groundLayer.objects) do
+		platformUtils.spawnPlatform(object, world, wfworld)
+	end
+
+	local wallLayer = map.layers['Walls']
+	for i, object in pairs(wallLayer.objects) do
+		platformUtils.spawnPlatform(object, world, wfworld)
+	end
 	
 	-- Load the platforms for this map
 	-- Should probably refactor this to be a utility that takes a callback or something
-  local platformLayer = map.layers['Platforms']
-	for i, v in ipairs(platformLayer.data) do
-		for j, v2 in pairs(v) do
-				if platforms[i] == nil then
-					platforms[i] = {}
-				end
+  -- local platformLayer = map.layers['Platforms']
+	-- for i, v in ipairs(platformLayer.data) do
+	-- 	for j, v2 in pairs(v) do
+	-- 			if platforms[i] == nil then
+	-- 				platforms[i] = {}
+	-- 			end
 
-				local tile = { x = j * 32, y = i * 32 }
-				platforms[i][j] = platformUtils.spawnPlatform(tile, world, wfworld)
-		end
-	end
+	-- 			local tile = { x = j * 32, y = i * 32 }
+	-- 			platforms[i][j] = platformUtils.spawnPlatform(tile, world, wfworld)
+	-- 	end
+	-- end
 
 	for k, object in pairs(map.objects) do
 		if object.name == 'Player' or object.type == 'Player' then
@@ -127,7 +137,7 @@ function playState.draw()
 
 	-- print(SCORE)
 	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
-	-- wfworld:draw()
+	wfworld:draw()
 end
 
 return playState
