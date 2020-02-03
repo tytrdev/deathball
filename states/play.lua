@@ -31,6 +31,8 @@ local targets = {}
 SCORE = 0
 
 function playState.load()
+	love.graphics.setFont(love.graphics.newFont(20))
+
 	-- Create the World
 	world = Concord.world()
 
@@ -99,8 +101,9 @@ function playState.draw()
 	-- print(SCORE)
 	love.graphics.setColor(0, 0, 0)
 
-	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
 	wfworld:draw()
+	love.graphics.origin()
+	love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )))
 end
 
 return playState
